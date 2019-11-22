@@ -1,6 +1,7 @@
 import tweepy
 import random
 import account
+import os
 
 KEYFILE = 'api.txt'
 '''
@@ -13,11 +14,18 @@ for index,key in enumerate(open(KEYFILE)):
     keys[index]=key.strip().split(":")[1] #remove \n by strip
 
 
+CONSUMER_KEY = os.environ["CONSUMER_KEY"]
+CONSUMER_SECRET=os.environ["CONSUMER_SECRET"]
+ACCESS_TOKEN_KEY=os.environ["ACCESS_TOKEN_KEY"]
+ACCESS_TOKEN_SECRET=os.environ["ACCESS_TOKEN_SECRET"]
+
 
 class Listener(tweepy.StreamListener):
     def __init__(self):
-        auth = tweepy.OAuthHandler(keys[0],keys[1])
-        auth.set_access_token(keys[2],keys[3])
+        auth = tweepy.OAuthHandler(CONSUMER_KEY,CONSUMER_SECRET)
+        auth.set_access_token(ACCESS_TOKEN_KEY,ACCESS_TOKEN_SECRET)        
+        #auth = tweepy.OAuthHandler(keys[0],keys[1])
+        #auth.set_access_token(keys[2],keys[3])
         self.api = tweepy.API(auth)
         self.twitter_id = account.id()
         self.reply_flag = 0
